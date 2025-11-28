@@ -1,0 +1,125 @@
+<!-- downloads page clone for chrome -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download History</title>
+    <style>
+        .downloads-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            background-color: #f1f1f1;
+            border-bottom: 2px solid #ccc;
+            height: 50px;
+            border-radius: 20px;
+        }
+        .downloads-list {
+            padding: 10px;
+        }
+        .download-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 10px solid #fff;
+            border-radius: 5px;
+            background-color:#efefef;
+
+        }
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .file-info {
+            flex-grow: 1;
+        }
+        .file-name {
+            font-weight: bold;
+        }
+        .file-size {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .file-actions button {
+            margin-left: 5px;
+        }
+        button {
+            padding: 5px 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <header class="downloads-header">
+        <img src="data:image/png;base64,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"></img>
+        <h1>Download History</h1>
+        <button class="clear-all-btn">Clear all</button>
+    </header>
+    <main class="downloads-list">
+        <!-- Download items will be populated here -->
+    </main>
+    <script>
+        items = [
+            {name: 'hmm100.txt',size: '0 B'},
+        ];
+
+        // load from items
+        const downloadsList = document.querySelector('.downloads-list');
+        downloadsList.innerHTML = '';
+        items.forEach(item => {
+            const downloadItem = document.createElement('div');
+            downloadItem.className = 'download-item';
+            downloadItem.innerHTML = `
+                <div class="file-icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAFoCAYAAAB65WHVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAABcRAAAXEQHKJvM/AAAAB3RJTUUH6AgHBCEqy0k03gAADS5JREFUeNrt3VlwVfUBx/GbIBASAiQkAbWiAqJAIqDVBzta2zqOtu6WpbiMdSjgNtapilVcxqLiUmyV4sIiWkVAhkUFqRjXqnWBsqnoiAjojHV78MX2Qf/9n5ukw3TEnJDtJvfzmfk9M0Py/+ZwOTknkwEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgO3WN6xs3MG54XLW1yw6p/zoU+JaE/NYtblTc5XFL4zbE7Yz7NO4za5f9K+6fcdfGVfkWhfyzV9wxcQvqoxAs5/Zt3ONxA3y7Qv5IrspujftCBDvEVoo05Ifk883V9Vdn4ifSQA7F+RWxE2kgt/Srv3IWOpEGckiXuNvETaSB3HNs3OfCJtJAbknuc14gaCIN5J7DM024z7mwsDBUVlWGYcOGhZqaGmvFDR8+PJSUlIg05LEr0x72fv36hSunXBnW1K4J6zeuDxs3b7RW3GtvvBYOO/wwV9KQp5JnayxPG+f5D84P23duz+7DHR9aK++dd98JRx55pI87IE9Vxm1Kc8CnXDUlG+Zt27dZGywJ9Ntb3m7JQIs0dDCD4z5Oc/Vc+2ytQHf8QIs0dCA1mRS311VXV4cNmzZkoyGeHT7QIg0dxIi4Lxs70CNHjQyb39os0J0n0CINnSbQI0eGTW9tEugcDXRhYUHo2rWrSINAi2euBbpnz5Jw3jlnhcqKCpEGgbbcCnTPsOiR+WHG7beE8vIykQaBtly6gk4C/e7mteH26dNEGgTacinQCx+eH7ZsWhve3vCGSEM765Wpe5HruLgr4qbF3dzE3RQ3N+5rge48gX5r/esiDe2gMFP3xpNr4l7O1L0v8JtMGzwVTaA7VqBFGtpW/7gb4rZn2uFdgQLd8QIt0tA2jop7KdOOL3EV6I4ZaJGG1nVy3LZMOz/4XaA7bqBFGlrHcXE7MjnwZg6B7tiBFmloWUPi1mdy5NVJAt3xAy3S0DK6x83L5NC77QS6cwRapKH5Toj7SqAFujUCLdKw55I3bC/K5NjboQW6fbblvS3hqB8d1ejXp3v3bmHufTNTB1qkYc8cGvdJ2oNSVtYn/OwnPw4Tzz8vXDz5N+GiSel3yQUTw9hfnhEPd3eBztG9/8H74cSfn5jqe+Gi+PXcsvHN1IEWaWi6yWkPSE318DDzztvDMytXhBeeXtXkvfTM6jD33pmhtLSnQOfokleMTZo8KdX3w4AB+4XlSx4N7zbhKlqkoWlmpzkY+8fD+MB9s7KhffapJ/Zoz/9tZZj9l7sEOoe38+Od4a677wpdunRJFcwfHj4qLF7wUDa8725el326XeNbF96Lu/OO6aGyoq9Iw270iKtNcygunDihWXEW6I5zBf38i8+HfffdN3Uw+/WrCmNHnxluvH5q9so47e6YflM4/rifen0W7EZZ3LrGDkNJSUm4588zsoEV6M6/rdu2hjFjxjQ5mgUFyQpSr7CwMPWVukiTjyriNjV2EMrLysJDc+4T6DzZjo92hIWLF4bevXvn1J09u9myuHJHmfwNdLlA5+PdHGefc3ZHCHTy+NuLHGUEWqDz6rPoF//+Yqiuru4IkX4qrshxRqAFOq8+6liwcEHYZ599cj3QG3zMgUALdF5eSc+ZN6dJd3W0wzbVfy+DQAt0/kV68ZLFYdSoUdm7LwQaBFqgc+zjjldfezVMvmByqKyqFGgQaIHOtSvpDz78IKx8amU21EOHDg3FxcUCDQJtuRTq5Ouydt3a7P3SN067Mfv8jnG/GhdGjxndIhszdkz2oU1FRUUCjUALtO3J86OTjz6S53c0RLslfwg8+/yzoaqqSqARaIG2XLtKF2gEWqBNoEGgBdoEGgTaBBoEWqBNoEGgTaAFGoEWaBNoEGiBNoEGgTaBBoEWaBNoEGgTaIFGoAXaBBoEWqBNoEGgTaBBoAXaBBoE2gQaBFqgTaBBoAVLoAUagRZoE2gQaIE2gQaBNoEGgRZoE2gQaBNogUagBdoEGgRaoE2gQaBNoEGgBdoEGgTaBBoEWqBNoEGgBVqgBRqBFmgTaBBogTaBBoE2gQaBFmgTaBBoE2iBRqAF2gQaBFqgTaBBoE2gQaAF2gQaBNoEWqARaIE2gQaBFmiBFmgEWqBNoEGgBdoEGgTaBBoEWqBNoEGgTaAFGoEWaBNoEGiBNoEGgTaBBoEWaBNoEGgTaIFGoAXaBBoEWqBNoEGgTaBBoAXaBBoE2gQaBFqgTaBBoAVLoAUagRZoE2gQaIE2gQaBNoEGgRZoE2gQaBNogUagBdoEGgRaoE2gQaBNoEGgBdoEGgTaBBoEWqBNoEGgBVqgBRqBFmgTaBBogTaBBoE2gQaBFmgTaBBoE2iBRqAF2gQaBFqgTaBBoE2gQaAF2gQaBNoEWqARaIE2gQaBFmiBFmgEWqBNoEGgBdoEGgTaBBoEWqBNoEGgTaAFGoEWaBNoEGiBNoEGgTaBBoEWaBNoEGgTaIFGoAXaBBoEWqBNoEGgTaBBoAXaBBoE2gQaBFqgTaBBoE2gBRqBFmgTaBBogTaBBoE2gQaBFmgTaBBoE2iBRqAF2gQaBFqgTaBBoE2gQaAF2gQaBNoEGgRaoE2gQaAFWqAFGoEWaBNoEGiBNoEGgTaBBoEWaBNoEGgTaIFGoAXaBBoEWqBNoEGgTaBBoAXaBBoE2gRaoBFogTaBBoEWaIEWaARaoE2gQaAF2gQaBNoEGgRaoE2gQaBNoAUagRZoE2gQaIE2gQaBNoEGgRZoE2gQaBNogUagBdoEGgRaoAVaoEGgTaBBoAXaBBoE2gQaBFqgTaBBoE2gBRqBFmgTaBBogTaBBoE2gQaBFmgTaOjQgS5t9NCNGDlCoAU6VFZVCjQC3VaBfuC+WaFPn96NHrqBgwaG1998XaDzdDs+2hFWPLEilPYqTRPodXFljjMC3YxAP7f6ybDorw+Evfv3b/TQFRUVhXnz54WdH+8UrDwN9NRrp6aJc7LauB6OMwLdzECvXPZYqKkenurgHX3M0WHd+nXZwypa+bPkh/Ka2jVh8EGD0wZ6tqOMQDcz0A2RPv2Uk1IdvMLCwnDSySeF2udq/3dwrXNv67atYemypeGII49IG+dkkx1lBLoFAv3C06vCjddeE7p23Sv1ARwwYEAYP358uHrq1eG666+zTropV00Jp552aqioqGhKnD+JO9RRRqBb6Ap66cKHw5D0/3w1+74tiuvmKCPQLRDohrs5Lp48MfsRhsBYM/ZV3AmOMQLdgoFOrqKXLXokjKipFhlrzubFdXeMEegWDHTDVfSMW28O5WVlQmN7svVxQxxhBLoVAt1wJX35by8JxcXFgmNN2Y644xxfBLoVA52sdtXj4dKLLgilPXsKj6XZtriTHV0Eug0C/Vx9pG+Y+vswYL8fCJDtbt/GvRR3lGOLQLdRoHf9TPrB2feGU35xYujdq5cg2a5h3h53Q1x/RxaBbodAN0T6mZUrwqw//TGMOfP0MHjgwFBc3CMUFBQIVX7tm7gv4l6OuybukLhCxxWBbsdA7xrqhlvxZs64PVz1u8vChPPODWeNHR3GW7ts9Bmnhb59y9PE9eu4uXE3xd3cxE2LuyJuXNyouF6OKAKdY4He9S6PF+Kfmfx6eLLkz7e2X/J3v2r5kjD0kIPTBPrLuBGOFnTyQFtuLPlB+eTSxWHowUMEGgTaBBoQaBNoEGgTaECgrZUC7T8JoS31jdvY2KEr69MnzL//HoHO40A/vmRhOGjwoDSB/jyuxtGC5kvuM/1HY4euW7euYfofbsjebiVY+beG3/LsW57qPuiP4wY7WtB8XeOWpzh04YTjjwtrnlyevZoSrfwL9MTzz0v7W4DJR2aVjha0jFvSHLweRUXhsksuzD7Y6IX63/Szzr2GX1RJ/vVU0bdv2kAvr//BD7SAU+L+nebwlRQXhzNPOzXce/edYfmiR8ITSxZaJ92Kxx4N8++fFSb8+twY5/KmPEfjSkcKWs7emRT/UbjrepWWhgMP2D/74lfrnBs08MDs3TuFTXtQ1WdxhztS0LKuz3iCmjV/CzLesA0tblDcOwJjzVhye92xjhK0jgmZukdFio3tyW6L6+IYQevoETcrU/cGC8Gxpmx1XD9HCFpXcv/qIpG2JuyVTN0bT4A2UBU3J+4/4mOZ739X4GpxhrZXEndppu5lnWJk/7/kfYG31v8wB9pBQabuoTd3x+3I1L3IU5zye8l9zsmtdMfE7eWIQPtL/md+SNykuIfj3qy/sv60/sBa51zy9d0ZtyFuadzlmboXubrPGXI41n3iDogbFldtnXbD4wZm6h5J69kaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN/lv6ylcf12Dza1AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI0LTA4LTA3VDA0OjMzOjQyKzAwOjAwBdy4RQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNC0wOC0wN1QwNDozMzo0MiswMDowMHSBAPkAAAAASUVORK5CYII=" width=40 height=40></img></div>
+                <div class="file-info">
+                    <span class="file-name">${item.name}</span>
+                    <span class="file-size">${item.size}</span>
+                </div>
+                <div class="file-actions">
+                    <button class="open-btn">Open</button>
+                    <button class="show-in-folder-btn">Show in folder</button>
+                </div>
+            `;
+            downloadsList.appendChild(downloadItem);
+        });
+
+        document.querySelector('.clear-all-btn').addEventListener('click', () => {
+            const downloadsList = document.querySelector('.downloads-list');
+            downloadsList.innerHTML = '';
+            alert('All downloads cleared');
+        });
+
+        document.querySelectorAll('.open-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const fileName = e.target.closest('.download-item').querySelector('.file-name').textContent;
+                alert(`Opening ${fileName}`);
+                window.open('about:blank', '_blank');
+            });
+        });
+
+        document.querySelectorAll('.show-in-folder-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const fileName = e.target.closest('.download-item').querySelector('.file-name').textContent;
+                alert(`Showing ${fileName} in folder`);
+            });
+        });
+    </script>
+</body>
+</html>
